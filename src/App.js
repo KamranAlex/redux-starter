@@ -1,25 +1,25 @@
 import './App.css';
 import store from '../src/components/store';
+import {
+  bugAdded,
+  bugRemoved,
+  bugResolved
+} from '../src/components/actionCreators';
 
 function App() {
   const unsubscribe = store.subscribe(() => {
     console.log('store changed', store.getState());
   });
-  store.dispatch({
-    type: 'bugAdded',
-    payload: {
-      description: 'bug-1',
-      resolved: true
-    }
-  });
-  unsubscribe();
-  store.dispatch({
-    type: 'bugRemoved',
-    payload: {
-      id: 1
-    }
-  });
+  store.dispatch(bugAdded('Bug_1', true));
+
+  store.dispatch(bugResolved(1));
+
+  store.dispatch(bugRemoved(1));
+
   console.log(store.getState());
+
+  unsubscribe();
+
   return (
     <div className='App'>
       <h1>Hello Redux</h1>
